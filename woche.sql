@@ -9,14 +9,14 @@ FROM
             sum(a.tote100k) AS tote100k,
             sum(b.baseline) AS baseline
         FROM
-            mortality a
-            JOIN baseline2021 b ON a.altersgruppe = b.altersgruppe
+            deutschland.mortality a
+            JOIN deutschland.baseline2021 b ON a.altersgruppe = b.altersgruppe
             AND a.bundesland = b.bundesland
             AND a.woche = b.woche
         WHERE
             a.jahr = 2021
-            AND a.woche >= 26
-            AND a.woche <= 42
+            AND a.woche >= 39
+            AND a.woche <= 43
         GROUP BY
             a.jahr,
             a.bundesland
