@@ -60,48 +60,17 @@ FROM
     AND t.altersgruppe = e.altersgruppe;
 
 -- Baseline 2020
-DROP VIEW IF EXISTS baseline2020D;
+DROP VIEW IF EXISTS baselineD;
 
-CREATE VIEW baseline2020D AS
+CREATE VIEW baselineD AS
 SELECT
     altersgruppe,
     woche,
-    AVG(tote100k) * ((52 + 5 / 7) / 52) AS baseline -- Adjust for 53 weeks
+    AVG(tote100k) AS 'baseline'
 FROM
     mortalityD a
 WHERE
     a.jahr IN (2015, 2016, 2017, 2018, 2019)
-GROUP BY
-    altersgruppe,
-    woche;
-
--- Baseline 2021
-DROP VIEW IF EXISTS baseline2021D;
-
-CREATE VIEW baseline2021D AS
-SELECT
-    altersgruppe,
-    woche,
-    AVG(tote100k) AS baseline
-FROM
-    mortalityD a
-WHERE
-    a.jahr IN (2015, 2016, 2017, 2018, 2019)
-    AND woche <= (
-        -- Limit to last data week
-        SELECT
-            max(cast(woche AS integer))
-        FROM
-            mortalityD
-        WHERE
-            jahr IN (
-                SELECT
-                    max(cast(jahr AS integer))
-                FROM
-                    mortalityD
-            )
-            AND tote100k > 0
-    )
 GROUP BY
     altersgruppe,
     woche;

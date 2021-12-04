@@ -1,10 +1,12 @@
 SELECT
-    *,
-    (tote100k / baseline) -1 AS excess
+    concat(jahr, "/", woche) AS jahr_woche,
+    tote100k,
+    baseline
 FROM
     (
         SELECT
             a.jahr,
+            lpad(a.woche, 2, 0) AS 'woche',
             sum(a.tote100k) AS tote100k,
             sum(b.baseline) AS baseline
         FROM
@@ -13,8 +15,11 @@ FROM
             AND a.woche = b.woche
         WHERE
             a.jahr IN (2020, 2021)
-            AND a.woche >= 40
-            AND a.woche <= 46
+            AND a.altersgruppe <> "Insgesamt"
         GROUP BY
-            a.jahr
-    ) a;
+            a.jahr,
+            a.woche
+    ) a
+ORDER BY
+    jahr,
+    woche;
