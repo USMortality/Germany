@@ -19,6 +19,29 @@ GROUP BY
     jahr,
     altersgruppe;
 
+-- Calculate weights
+DROP VIEW IF EXISTS populationWeights;
+
+CREATE VIEW populationWeights AS
+SELECT
+    a.altersgruppe,
+    a.einwohner / b.gesamt AS "weight"
+FROM
+    populationD a
+    JOIN (
+        SELECT
+            jahr,
+            altersgruppe,
+            einwohner AS "gesamt"
+        FROM
+            populationD
+        WHERE
+            altersgruppe = "Insgesamt"
+            AND jahr = 2021
+    ) b ON a.jahr = b.jahr
+WHERE
+    a.altersgruppe <> "Insgesamt";
+
 -- Combine 85+
 DROP VIEW IF EXISTS toteD;
 
@@ -51,26 +74,44 @@ DROP VIEW IF EXISTS mortalityD;
 
 CREATE VIEW mortalityD AS
 SELECT
-    t.*,
-    concat(t.jahr, "/", ceil(cast(woche AS integer) / 13)) AS jahr_quartal,
-    t.tote / (e.einwohner / 100000) AS "tote100k"
+    a.jahr,
+    a.altersgruppe,
+    a.woche,
+    concat(a.jahr, "/", ceil(cast(woche AS integer) / 13)) AS jahr_quartal,
+    tote,
+    a.tote / (b.einwohner / 100000) AS "tote100k",
+    (a.tote / (b.einwohner / 100000)) * weight AS "tote100kWeighted"
 FROM
-    toteD t
-    JOIN populationD e ON t.jahr = e.jahr
-    AND t.altersgruppe = e.altersgruppe;
+    toteD a
+    JOIN populationD b ON a.jahr = b.jahr
+    AND a.altersgruppe = b.altersgruppe
+    JOIN populationWeights c ON a.altersgruppe = c.altersgruppe;
 
 -- Baseline 2020
 DROP VIEW IF EXISTS baselineD;
 
 CREATE VIEW baselineD AS
 SELECT
-    altersgruppe,
     woche,
-    AVG(tote100k) AS 'baseline'
+    baseline100kWeighted * (
+        SELECT
+            einwohner
+        FROM
+            populationD
+        WHERE
+            jahr = 2020
+            AND altersgruppe = "Insgesamt"
+    ) / 100000 AS baseline
 FROM
-    mortalityD a
-WHERE
-    a.jahr IN (2015, 2016, 2017, 2018, 2019)
-GROUP BY
-    altersgruppe,
-    woche;
+    (
+        SELECT
+            woche,
+            AVG(tote100kWeighted) AS 'baseline100kWeighted'
+        FROM
+            mortalityD a
+        WHERE
+            a.jahr IN (2015, 2016, 2017, 2018, 2019)
+            AND altersgruppe <> "Insgesamt"
+        GROUP BY
+            woche
+    ) a;

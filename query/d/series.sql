@@ -1,25 +1,24 @@
 SELECT
-    concat(jahr, "/", woche) AS jahr_woche,
-    tote100k,
-    baseline
+    a.jahr,
+    concat(a.jahr, "/", lpad(a.woche, 2, 0)) AS jahr_woche,
+    @tote := sum(a.tote) AS tote,
+    b.baseline
 FROM
-    (
-        SELECT
-            a.jahr,
-            lpad(a.woche, 2, 0) AS 'woche',
-            sum(a.tote100k) AS tote100k,
-            sum(b.baseline) AS baseline
-        FROM
-            deutschland.mortalityD a
-            JOIN deutschland.baselineD b ON a.altersgruppe = b.altersgruppe
-            AND a.woche = b.woche
-        WHERE
-            a.jahr IN (2020, 2021)
-            AND a.altersgruppe <> "Insgesamt"
-        GROUP BY
-            a.jahr,
-            a.woche
-    ) a
+    deutschland.mortalityD a
+    JOIN deutschland.baselineD b ON a.woche = b.woche
+WHERE
+    a.jahr IN (2020, 2021)
+    AND a.altersgruppe <> "Insgesamt"
+GROUP BY
+    a.jahr,
+    a.woche
 ORDER BY
-    jahr,
-    woche;
+    jahr_woche;
+
+SELECT
+    *
+FROM
+    populationD c
+WHERE
+    altersgruppe = "Insgesamt"
+    AND jahr IN (2020, 2021);
