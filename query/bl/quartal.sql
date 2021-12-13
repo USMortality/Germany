@@ -1,13 +1,13 @@
 SELECT
     *,
-    (tote100k / baseline) -1 AS excess
+    (tote100kWeighted / baseline) -1 AS excess
 FROM
     (
         SELECT
             a.jahr,
             a.bundesland,
             a.jahr_quartal,
-            sum(a.tote100k) AS tote100k,
+            sum(a.tote100kWeighted) AS tote100kWeighted,
             sum(b.baseline) AS baseline
         FROM
             mortality a
@@ -26,7 +26,7 @@ FROM
             a.jahr,
             a.bundesland,
             a.jahr_quartal,
-            sum(a.tote100k) AS tote100k,
+            sum(a.tote100kWeighted) AS tote100kWeighted,
             sum(b.baseline) AS baseline
         FROM
             mortality a

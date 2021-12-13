@@ -76,7 +76,7 @@ SELECT
     bundesland,
     altersgruppe,
     woche,
-    AVG(tote100k) * ((52 + 5 / 7) / 52) AS baseline -- Adjust for 53 weeks
+    AVG(tote100kWeighted) AS baseline -- Adjust for 53 weeks
 FROM
     mortality a
 WHERE
@@ -94,7 +94,7 @@ SELECT
     bundesland,
     altersgruppe,
     woche,
-    AVG(tote100k) AS baseline
+    AVG(tote100kWeighted) AS baseline
 FROM
     mortality a
 WHERE
