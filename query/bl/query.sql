@@ -1,17 +1,17 @@
 -- Create indices for faster joins.
-CREATE INDEX IF NOT EXISTS idx_all ON deutschland.imp_Tote (jahr, altersgruppe, bundesland);
+CREATE INDEX IF NOT EXISTS idx_all ON deutschland.imp_Tote (bundesland, jahr, altersgruppe);
 
-CREATE INDEX IF NOT EXISTS idx_all ON deutschland.imp_Einwohner (jahr, altersgruppe, bundesland);
+CREATE INDEX IF NOT EXISTS idx_all ON deutschland.imp_Einwohner (bundesland, jahr, altersgruppe);
 
 -- Sum up the population age groups.
 DROP VIEW IF EXISTS population;
 
 CREATE VIEW population AS
 SELECT
+    bundesland,
     jahr,
     altersgruppe,
-    bundesland,
-    SUM(einwohner) einwohner
+    SUM(einwohner) AS "einwohner"
 FROM
     deutschland.imp_Einwohner
 GROUP BY
@@ -19,19 +19,54 @@ GROUP BY
     altersgruppe,
     bundesland;
 
+-- Calculate weights
+DROP VIEW IF EXISTS populationWeights;
+
+CREATE VIEW populationWeights AS
+SELECT
+    a.bundesland,
+    a.jahr,
+    a.altersgruppe,
+    a.einwohner,
+    a.einwohner / b.gesamt AS "weight"
+FROM
+    population a
+    JOIN (
+        SELECT
+            bundesland,
+            jahr,
+            altersgruppe,
+            einwohner AS "gesamt"
+        FROM
+            population
+        WHERE
+            altersgruppe = ""
+    ) b ON a.bundesland = b.bundesland
+    AND a.jahr = b.jahr
+WHERE
+    a.altersgruppe <> "";
+
 -- Calculate mortality per 100k.
 DROP VIEW IF EXISTS mortality;
 
 CREATE VIEW mortality AS
 SELECT
-    t.*,
-    concat(t.jahr, "/", ceil(cast(woche AS integer) / 13)) AS jahr_quartal,
-    t.tote / (e.einwohner / 100000) AS "tote100k"
+    a.jahr,
+    a.bundesland,
+    a.altersgruppe,
+    a.woche,
+    concat(a.jahr, "/", ceil(cast(woche AS integer) / 13)) AS jahr_quartal,
+    tote,
+    a.tote / (b.einwohner / 100000) AS "tote100k",
+    (a.tote / (b.einwohner / 100000)) * weight AS "tote100kWeighted"
 FROM
-    deutschland.imp_Tote t
-    JOIN deutschland.population e ON t.jahr = e.jahr
-    AND t.altersgruppe = e.altersgruppe
-    AND t.bundesland = e.bundesland;
+    deutschland.imp_Tote a
+    JOIN population b ON a.jahr = b.jahr
+    AND a.bundesland = b.bundesland
+    AND a.altersgruppe = b.altersgruppe
+    JOIN populationWeights c ON a.jahr = c.jahr
+    AND a.bundesland = c.bundesland
+    AND a.altersgruppe = c.altersgruppe;
 
 -- Baseline 2020
 DROP VIEW IF EXISTS baseline2020;

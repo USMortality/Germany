@@ -1,5 +1,4 @@
 SELECT
-    -- *,
     jahr,
     sum(tote100kWeighted)
 FROM
@@ -16,11 +15,3 @@ WHERE
     )
 GROUP BY
     a.jahr;
-
-SELECT
-    *
-FROM
-    populationD c
-WHERE
-    altersgruppe = "Insgesamt"
-    AND jahr IN (2020, 2021);

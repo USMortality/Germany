@@ -20,9 +20,9 @@ GROUP BY
     altersgruppe;
 
 -- Calculate weights
-DROP VIEW IF EXISTS populationWeights;
+DROP VIEW IF EXISTS populationWeightsD;
 
-CREATE VIEW populationWeights AS
+CREATE VIEW populationWeightsD AS
 SELECT
     a.altersgruppe,
     a.einwohner / b.gesamt AS "weight"
@@ -85,7 +85,7 @@ FROM
     toteD a
     JOIN populationD b ON a.jahr = b.jahr
     AND a.altersgruppe = b.altersgruppe
-    JOIN populationWeights c ON a.altersgruppe = c.altersgruppe;
+    JOIN populationWeightsD c ON a.altersgruppe = c.altersgruppe;
 
 -- Baseline 2020
 DROP VIEW IF EXISTS baselineD;
