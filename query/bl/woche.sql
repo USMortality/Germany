@@ -16,7 +16,7 @@ FROM
         WHERE
             a.jahr = 2021
             AND a.woche >= 40
-            AND a.woche <= 44
+            AND a.woche <= 45
         GROUP BY
             a.jahr,
             a.bundesland

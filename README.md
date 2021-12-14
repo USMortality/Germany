@@ -34,7 +34,7 @@ Deutschland BL:
 mysql -h 127.0.0.1 -u root deutschland <query/bl/query.sql
 mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/bl/mortality_quarter.csv
 mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly_current_week.sql >./out/bl/mortality_yearly_current_week.csv
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly.sql >./out/bl/mortality_yearly.csv
+mysql -h 127.0.0.1 -u root deutschland <query/bl/quartal.sql >./out/bl/quartal.csv
 ```
 
 # Visualization
