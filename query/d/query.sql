@@ -19,29 +19,6 @@ GROUP BY
     jahr,
     altersgruppe;
 
--- Calculate weights
-DROP VIEW IF EXISTS populationWeightsD;
-
-CREATE VIEW populationWeightsD AS
-SELECT
-    a.altersgruppe,
-    a.einwohner / b.gesamt AS "weight"
-FROM
-    populationD a
-    JOIN (
-        SELECT
-            jahr,
-            altersgruppe,
-            einwohner AS "gesamt"
-        FROM
-            populationD
-        WHERE
-            altersgruppe = "Insgesamt"
-            AND jahr = 2021
-    ) b ON a.jahr = b.jahr
-WHERE
-    a.altersgruppe <> "Insgesamt";
-
 -- Combine 85+
 DROP VIEW IF EXISTS toteD;
 
@@ -80,12 +57,12 @@ SELECT
     concat(a.jahr, "/", ceil(cast(woche AS integer) / 13)) AS jahr_quartal,
     tote,
     a.tote / (b.einwohner / 100000) AS "tote100k",
-    (a.tote / (b.einwohner / 100000)) * weight AS "tote100kWeighted"
+    (a.tote / (b.einwohner / 100000)) * c.weight AS "tote100kWeighted"
 FROM
     toteD a
     JOIN populationD b ON a.jahr = b.jahr
     AND a.altersgruppe = b.altersgruppe
-    JOIN populationWeightsD c ON a.altersgruppe = c.altersgruppe;
+    JOIN imp_EinwohnerStandardD c ON a.altersgruppe = c.altersgruppe;
 
 -- Baseline 2020
 DROP VIEW IF EXISTS baselineD;

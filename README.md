@@ -19,6 +19,7 @@ Deutschland:
 ```bash
 ./import_csv.sh data/ToteD.csv deutschland
 ./import_csv.sh data/EinwohnerD.csv deutschland
+./import_csv.sh data/EinwohnerStandardD.csv deutschland
 
 mysql -h 127.0.0.1 -u root deutschland <query/d/query.sql
 mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_quarter.sql >./out/d/mortality_quarter.csv
@@ -27,9 +28,10 @@ mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly.sql >./out/d/mo
 ```
 
 Deutschland BL:
-```
+```bash
 ./import_csv.sh data/Tote.csv deutschland
 ./import_csv.sh data/Einwohner.csv deutschland
+./import_csv.sh data/EinwohnerStandard.csv deutschland
 
 mysql -h 127.0.0.1 -u root deutschland <query/bl/query.sql
 mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/bl/mortality_quarter.csv

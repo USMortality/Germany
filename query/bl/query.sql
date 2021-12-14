@@ -19,33 +19,6 @@ GROUP BY
     altersgruppe,
     bundesland;
 
--- Calculate weights
-DROP VIEW IF EXISTS populationWeights;
-
-CREATE VIEW populationWeights AS
-SELECT
-    a.bundesland,
-    a.jahr,
-    a.altersgruppe,
-    a.einwohner,
-    a.einwohner / b.gesamt AS "weight"
-FROM
-    population a
-    JOIN (
-        SELECT
-            bundesland,
-            jahr,
-            altersgruppe,
-            einwohner AS "gesamt"
-        FROM
-            population
-        WHERE
-            altersgruppe = ""
-    ) b ON a.bundesland = b.bundesland
-    AND a.jahr = b.jahr
-WHERE
-    a.altersgruppe <> "";
-
 -- Calculate mortality per 100k.
 DROP VIEW IF EXISTS mortality;
 
@@ -64,9 +37,7 @@ FROM
     JOIN population b ON a.jahr = b.jahr
     AND a.bundesland = b.bundesland
     AND a.altersgruppe = b.altersgruppe
-    JOIN populationWeights c ON a.jahr = c.jahr
-    AND a.bundesland = c.bundesland
-    AND a.altersgruppe = c.altersgruppe;
+    JOIN imp_EinwohnerStandard c ON a.altersgruppe = c.altersgruppe;
 
 -- Baseline 2020
 DROP VIEW IF EXISTS baseline2020;
