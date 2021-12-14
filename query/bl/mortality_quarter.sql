@@ -1,7 +1,7 @@
 SELECT
     bundesland,
     jahr_quartal,
-    sum(tote100kWeighted)
+    sum(tote100kWeighted) AS "tote100kWeighted"
 FROM
     deutschland.mortality a
 WHERE

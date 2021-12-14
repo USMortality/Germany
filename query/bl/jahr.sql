@@ -1,6 +1,6 @@
 SELECT
     *,
-    (tote100kWeighted / baseline) -1 AS excess
+    (tote100kWeighted / baseline) -1 AS "excess"
 FROM
     (
         SELECT
