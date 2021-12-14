@@ -21,9 +21,9 @@ Deutschland:
 ./import_csv.sh data/EinwohnerD.csv deutschland
 
 mysql -h 127.0.0.1 -u root deutschland <query/d/query.sql
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_quarter.sql >./out/mortality_quarter.csv
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly_current_week.sql >./out/mortality_yearly_current_week.csv
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly.sql >./out/mortality_yearly.csv
+mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_quarter.sql >./out/d/mortality_quarter.csv
+mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly_current_week.sql >./out/d/mortality_yearly_current_week.csv
+mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly.sql >./out/d/mortality_yearly.csv
 ```
 
 Deutschland BL:
@@ -32,9 +32,9 @@ Deutschland BL:
 ./import_csv.sh data/Einwohner.csv deutschland
 
 mysql -h 127.0.0.1 -u root deutschland <query/bl/query.sql
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/mortality_quarter.csv
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly_current_week.sql >./out/mortality_yearly_current_week.csv
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly.sql >./out/mortality_yearly.csv
+mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/bl/mortality_quarter.csv
+mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly_current_week.sql >./out/bl/mortality_yearly_current_week.csv
+mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly.sql >./out/bl/mortality_yearly.csv
 ```
 
 # Visualization
