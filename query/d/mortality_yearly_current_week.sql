@@ -17,14 +17,14 @@ GROUP BY
     a.jahr;
 
 -- Diff FOR 2020
-SELECT
-    jahr,
-    sum(tote100kWeighted)
-FROM
-    deutschland.mortalityD a
-WHERE
-    jahr = 2020
-    AND woche >= 49
-    AND woche <= 52
-GROUP BY
-    a.jahr;
+-- SELECT
+--     jahr,
+--     sum(tote100kWeighted)
+-- FROM
+--     deutschland.mortalityD a
+-- WHERE
+--     jahr = 2020
+--     AND woche >= 50
+--     AND woche <= 52
+-- GROUP BY
+--     a.jahr;

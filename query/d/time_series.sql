@@ -1,4 +1,5 @@
 SELECT
+    jahr,
     lpad(a.woche, 2, 0) AS "woche",
     a.tote100kWeighted,
     baseline,
@@ -12,7 +13,7 @@ FROM
         FROM
             deutschland.mortalityD a
         WHERE
-            jahr = 2020
+            jahr IN (2020, 2021)
         GROUP BY
             jahr,
             woche
@@ -39,4 +40,5 @@ FROM
             woche
     ) b ON a.woche = b.woche
 ORDER BY
+    jahr,
     woche;
