@@ -9,7 +9,7 @@ FROM
             sum(b.baseline) AS baseline
         FROM
             deutschland.mortalityD a
-            JOIN deutschland.baselineD b ON a.altersgruppe = b.altersgruppe
+            JOIN deutschland.baselineD b ON
             AND a.woche = b.woche
         WHERE
             a.jahr IN (2020, 2021)
