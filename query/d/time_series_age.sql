@@ -31,7 +31,6 @@ FROM
         WHERE
             jahr IN (2015, 2016, 2017, 2018, 2019)
         GROUP BY
-            jahr,
             woche,
             altersgruppe
     ) b ON a.woche = b.woche
