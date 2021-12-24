@@ -6,8 +6,10 @@ docker run --name deutschland-db -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d -p 3306:3
 
 # Data Import
 Download data from:
-1) https://docs.google.com/spreadsheets/d/1QbSEwWvk2CV9cd5l0c1GNZOmjUIYI67sA5qb1iUVPpI/edit#gid=1998881205
-2) https://docs.google.com/spreadsheets/d/1lbGyvqjNbi5fepKrQQx6atQny-2i55ik0Jxhy7O_DVM/edit#gid=1998881205
+1) Deaths D: https://docs.google.com/spreadsheets/d/1QbSEwWvk2CV9cd5l0c1GNZOmjUIYI67sA5qb1iUVPpI/edit#gid=1998881205
+2) Deaths BL: https://docs.google.com/spreadsheets/d/1lbGyvqjNbi5fepKrQQx6atQny-2i55ik0Jxhy7O_DVM/edit#gid=1998881205
+3) Population D: https://docs.google.com/spreadsheets/d/1aYKU725wu2EtH-zPjNufW_SGp2CTgxkeDe_dMI5SxQc/edit#gid=1721712158
+4) Population BL: https://docs.google.com/spreadsheets/d/1gq5oN__hUMeG-i1SXLg-xW6q3ZNl4qq5WjyesOZkzfI/edit#gid=1038911700
 
 ```bash
 cp ~/Downloads/2__Deutschland\ BL\ Destatis\ -\ Export.csv data/Tote.csv
@@ -15,36 +17,16 @@ cp ~/Downloads/2__Deutschland\ BL\ Destatis\ -\ Data.csv data/Tote.csv
 ```
 
 # Export
-Deutschland:
 ```bash
-./import_csv.sh data/ToteD.csv deutschland
-./import_csv.sh data/EinwohnerD.csv deutschland
-./import_csv.sh data/EinwohnerStandardD.csv deutschland
-
-mysql -h 127.0.0.1 -u root deutschland <query/d/query.sql
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_quarter.sql >./out/d/mortality_quarter.csv
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly_current_week.sql >./out/d/mortality_yearly_current_week.csv
-mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly.sql >./out/d/mortality_yearly.csv
-mysql -h 127.0.0.1 -u root deutschland <query/d/time_series.sql >./out/d/time_series.csv
-```
-
-Deutschland BL:
-```bash
-./import_csv.sh data/Tote.csv deutschland
-./import_csv.sh data/Einwohner.csv deutschland
-./import_csv.sh data/EinwohnerStandard.csv deutschland
-
-mysql -h 127.0.0.1 -u root deutschland <query/bl/query.sql
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/bl/mortality_quarter.csv
-mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly_current_week.sql >./out/bl/mortality_yearly_current_week.csv
-mysql -h 127.0.0.1 -u root deutschland <query/bl/quartal.sql >./out/bl/quartal.csv
+./export.sh
 ```
 
 # Visualization
-1) https://docs.google.com/spreadsheets/d/1wZOWthP6YXIG1B1WCVt6Ma-iNGhKaH9jsOUWh-VEtes/edit#gid=0
-2) https://docs.google.com/spreadsheets/d/1308PYgjimTlRzNLsv2Jh9awI9npz0lKKTxClGtovCuk/edit#gid=0
-3) https://docs.google.com/spreadsheets/d/1Ih7Lz_c6LKQWSqELBkY3vPuLq6QH8xuJx44F3DICB1w/edit#gid=855710002
+1) Germany: https://docs.google.com/spreadsheets/d/1wZOWthP6YXIG1B1WCVt6Ma-iNGhKaH9jsOUWh-VEtes/edit#gid=0
+2) Bundesländer: https://docs.google.com/spreadsheets/d/1308PYgjimTlRzNLsv2Jh9awI9npz0lKKTxClGtovCuk/edit#gid=0
+3) Bundesländer/Matrix: https://docs.google.com/spreadsheets/d/1Ih7Lz_c6LKQWSqELBkY3vPuLq6QH8xuJx44F3DICB1w/edit#gid=855710002
 
 # About
 - https://www.usmortality.com/
+- https://twitter.com/USMortality
 - https://t.me/usmortality
