@@ -24,7 +24,7 @@ GROUP BY
 --     deutschland.mortalityD a
 -- WHERE
 --     jahr = 2020
---     AND woche >= 50
+--     AND woche >= 51
 --     AND woche <= 52
 -- GROUP BY
 --     a.jahr;
