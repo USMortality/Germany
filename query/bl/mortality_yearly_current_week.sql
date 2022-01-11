@@ -11,7 +11,7 @@ WHERE
         FROM
             deutschland.mortality a
         WHERE
-            jahr = 2022
+            jahr = 2021
             AND tote > 0
     )
 GROUP BY

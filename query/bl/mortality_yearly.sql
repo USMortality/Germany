@@ -5,7 +5,7 @@ SELECT
 FROM
     deutschland.mortality a
 WHERE
-    jahr <= 2021
+    jahr <= 2020
 GROUP BY
     a.bundesland,
     a.jahr;
