@@ -3,7 +3,8 @@ SELECT
     lpad(a.woche, 2, 0) AS "woche",
     a.tote100kWeighted,
     baseline,
-    a.tote100kWeighted / baseline -1 AS "excess"
+    a.tote100kWeighted / baseline -1 AS "excess",
+    a.tote100kWeighted - baseline AS "excessAbs"
 FROM
     (
         SELECT
