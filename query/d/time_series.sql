@@ -15,6 +15,7 @@ FROM
             deutschland.mortalityD a
         WHERE
             jahr IN (2020, 2021)
+            AND woche <= 52
         GROUP BY
             jahr,
             woche
@@ -27,6 +28,7 @@ FROM
             deutschland.mortalityD a
         WHERE
             jahr IN (2015, 2016, 2017, 2018, 2019)
+            AND woche <= 52
         GROUP BY
             woche
     ) b ON a.woche = b.woche

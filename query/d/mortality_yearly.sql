@@ -5,5 +5,6 @@ FROM
     deutschland.mortalityD a
 WHERE
     jahr <= 2021
+    AND woche <= 52
 GROUP BY
     a.jahr;
