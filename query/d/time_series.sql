@@ -14,7 +14,7 @@ FROM
         FROM
             deutschland.mortalityD a
         WHERE
-            jahr IN (2020, 2021)
+            jahr IN (2020, 2021, 2022)
             AND woche <= 52
         GROUP BY
             jahr,
