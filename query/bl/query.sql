@@ -70,6 +70,24 @@ FROM
     mortality a
 WHERE
     a.jahr IN (2015, 2016, 2017, 2018, 2019)
+GROUP BY
+    altersgruppe,
+    bundesland,
+    woche;
+
+-- Baseline 2022
+DROP VIEW IF EXISTS baseline2022;
+
+CREATE VIEW baseline2022 AS
+SELECT
+    bundesland,
+    altersgruppe,
+    woche,
+    AVG(tote100kWeighted) AS baseline
+FROM
+    mortality a
+WHERE
+    a.jahr IN (2015, 2016, 2017, 2018, 2019)
     AND woche <= (
         -- Limit to last data week
         SELECT

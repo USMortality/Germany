@@ -10,8 +10,8 @@ FROM
             sum(a.tote100kWeighted) AS tote100kWeighted,
             sum(b.baseline) AS baseline
         FROM
-            mortality a
-            JOIN baseline2020 b ON a.altersgruppe = b.altersgruppe
+            deutschland.mortality a
+            JOIN deutschland.baseline2020 b ON a.altersgruppe = b.altersgruppe
             AND a.bundesland = b.bundesland
             AND a.woche = b.woche
         WHERE
@@ -29,8 +29,8 @@ FROM
             sum(a.tote100kWeighted) AS tote100kWeighted,
             sum(b.baseline) AS baseline
         FROM
-            mortality a
-            JOIN baseline2021 b ON a.altersgruppe = b.altersgruppe
+            deutschland.mortality a
+            JOIN deutschland.baseline2021 b ON a.altersgruppe = b.altersgruppe
             AND a.bundesland = b.bundesland
             AND a.woche = b.woche
         WHERE
@@ -48,8 +48,8 @@ FROM
             sum(a.tote100kWeighted) AS tote100kWeighted,
             sum(b.baseline) AS baseline
         FROM
-            mortality a
-            JOIN baseline2021 b ON a.altersgruppe = b.altersgruppe
+            deutschland.mortality a
+            JOIN deutschland.baseline2022 b ON a.altersgruppe = b.altersgruppe
             AND a.bundesland = b.bundesland
             AND a.woche = b.woche
         WHERE
