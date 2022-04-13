@@ -63,32 +63,3 @@ FROM
     JOIN populationD b ON a.jahr = b.jahr
     AND a.altersgruppe = b.altersgruppe
     JOIN imp_EinwohnerStandardD c ON a.altersgruppe = c.altersgruppe;
-
--- Baseline 2020
-DROP VIEW IF EXISTS baselineD;
-
-CREATE VIEW baselineD AS
-SELECT
-    woche,
-    baseline100kWeighted * (
-        SELECT
-            einwohner
-        FROM
-            populationD
-        WHERE
-            jahr = 2020
-            AND altersgruppe = "Insgesamt"
-    ) / 100000 AS baseline
-FROM
-    (
-        SELECT
-            woche,
-            AVG(tote100kWeighted) AS 'baseline100kWeighted'
-        FROM
-            mortalityD a
-        WHERE
-            a.jahr IN (2015, 2016, 2017, 2018, 2019)
-            AND altersgruppe <> "Insgesamt"
-        GROUP BY
-            woche
-    ) a;
