@@ -28,3 +28,4 @@ mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_quarter.sql >./out/bl
 mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly.sql >./out/bl/mortality_yearly.csv
 mysql -h 127.0.0.1 -u root deutschland <query/bl/mortality_yearly_current_week.sql >./out/bl/mortality_yearly_current_week.csv
 mysql -h 127.0.0.1 -u root deutschland <query/bl/quartal.sql >./out/bl/quartal.csv
+mysql -h 127.0.0.1 -u root deutschland <query/bl/flu_season_2020_2022.sql >./out/bl/flu_season_2020_2022.csv
