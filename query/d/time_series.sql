@@ -32,6 +32,8 @@ FROM
         GROUP BY
             woche
     ) b ON a.woche = b.woche
+WHERE
+    a.tote100kWeighted > 0
 ORDER BY
     jahr,
     woche;

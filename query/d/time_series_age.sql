@@ -37,6 +37,8 @@ FROM
             altersgruppe
     ) b ON a.woche = b.woche
     AND a.altersgruppe = b.altersgruppe
+WHERE
+    tote100kWeighted > 0
 ORDER BY
     jahr,
     woche,
