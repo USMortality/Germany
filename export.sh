@@ -21,6 +21,7 @@ mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly_current_week.sq
 mysql -h 127.0.0.1 -u root deutschland <query/d/mortality_yearly.sql >./out/d/mortality_yearly.tsv
 mysql -h 127.0.0.1 -u root deutschland <query/d/time_series.sql >./out/d/time_series.tsv
 mysql -h 127.0.0.1 -u root deutschland <query/d/time_series_age.sql >./out/d/time_series_age.tsv
+mysql -h 127.0.0.1 -u root deutschland <query/d/time_series_age_60.sql >./out/d/time_series_age_60.tsv
 
 # Bundesländer
 mysql -h 127.0.0.1 -u root deutschland <query/bl/query.sql
